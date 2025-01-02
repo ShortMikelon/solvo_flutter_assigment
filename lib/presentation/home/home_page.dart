@@ -19,15 +19,15 @@ class HomePage extends StatelessWidget {
         body: Container(
           padding: const EdgeInsets.all(10.0),
           alignment: Alignment.center,
-          child: const _HomeDisplay(),
+          child: const _PageBody(),
         ),
       ),
     );
   }
 }
 
-class _HomeDisplay extends StatelessWidget {
-  const _HomeDisplay();
+class _PageBody extends StatelessWidget {
+  const _PageBody();
 
   @override
   Widget build(BuildContext context) {

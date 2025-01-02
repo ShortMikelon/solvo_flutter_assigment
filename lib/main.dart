@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:solvo_flutter_assignment/di.dart';
+import 'package:solvo_flutter_assignment/domain/entities/round.dart';
 import 'package:solvo_flutter_assignment/presentation/guess_number/guess_number_page.dart';
 import 'package:solvo_flutter_assignment/presentation/home/home_page.dart';
 import 'package:solvo_flutter_assignment/presentation/result/result_page.dart';
 import 'package:solvo_flutter_assignment/presentation/settings/settings_page.dart';
-
-import 'domain/entities/round.dart';
 
 void main() {
   DependencyInjector.configure();
@@ -28,6 +27,7 @@ class MyApp extends StatelessWidget {
       routes: {
         HomePage.route: (context) => const HomePage(),
         SettingsPage.route: (context) => const SettingsPage(),
+        GuessNumberPage.route: (context) => const GuessNumberPage(),
       },
       onGenerateRoute: ((settings) {
         if (settings.name == ResultPage.route) {
@@ -37,14 +37,8 @@ class MyApp extends StatelessWidget {
             builder: (context) => const ResultPage(),
             settings: RouteSettings(arguments: arg),
           );
-        } else if (settings.name == GuessNumberPage.route) {
-          final bool arg = settings.arguments as bool? ?? false;
-
-          return MaterialPageRoute(
-            builder: (context) => const GuessNumberPage(),
-            settings: RouteSettings(arguments: arg),
-          );
         }
+
         return null;
       }),
     );

@@ -1,16 +1,16 @@
-import 'package:solvo_flutter_assignment/data/answers_repository.dart';
+import 'package:solvo_flutter_assignment/data/in_memory_settings_repository.dart';
 import 'package:solvo_flutter_assignment/domain/repositories/round_repository.dart';
 
 import 'package:solvo_flutter_assignment/domain/entities/round.dart';
 
 class IsGameEndUseCase {
   final RoundRepository _roundRepository;
-  final AnswerRepository _answerRepository;
+  final InMemorySettingsRepository _settingsRepository;
 
   IsGameEndUseCase(
-    AnswerRepository answerRepository,
+    InMemorySettingsRepository settingsRepository,
     RoundRepository roundRepository,
-  )   : _answerRepository = answerRepository,
+  )   : _settingsRepository = settingsRepository,
         _roundRepository = roundRepository;
 
   bool execute() {
@@ -18,7 +18,7 @@ class IsGameEndUseCase {
 
     round.usedAttempts++;
 
-    bool isGameEnd = round.usedAttempts == _answerRepository.numberAttempts;
+    bool isGameEnd = round.usedAttempts == _settingsRepository.numberAttempts;
     if (isGameEnd) round.status = RoundStatus.lose;
 
     _roundRepository.updateRound(round);

@@ -1,24 +1,25 @@
 part of 'guess_number_bloc.dart';
 
-sealed class GuessNumberState {
-  final String answer;
-
-  GuessNumberState(this.answer);
-}
+sealed class GuessNumberState {}
 
 class InitialState extends GuessNumberState {
-  InitialState(super.answer);
+  final String answer;
+  final int attemptsCount;
+
+  InitialState(this.answer, this.attemptsCount);
 }
 
 class IncorrectAnswerState extends GuessNumberState {
-  IncorrectAnswerState(super.answer);
+  final String answer;
+  final int attemptsCount;
+  final bool isEmptyField;
+
+  IncorrectAnswerState(this.answer, this.attemptsCount, [this.isEmptyField = false]);
 }
 
-class RestartedState extends GuessNumberState {
-  RestartedState(super.answer);
-}
+class RestartedState extends GuessNumberState {}
 
 class GameEndState extends GuessNumberState {
   final Round round;
-  GameEndState(super.answer, this.round);
+  GameEndState(this.round);
 }

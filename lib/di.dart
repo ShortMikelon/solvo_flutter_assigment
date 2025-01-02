@@ -1,8 +1,9 @@
 import 'package:injector/injector.dart';
-import 'package:solvo_flutter_assignment/data/answers_repository.dart';
+import 'package:solvo_flutter_assignment/data/in_memory_settings_repository.dart';
 import 'package:solvo_flutter_assignment/data/in_memory_round_repository.dart';
 import 'package:solvo_flutter_assignment/domain/repositories/round_repository.dart';
 import 'package:solvo_flutter_assignment/domain/use_cases/check_answer_use_case.dart';
+import 'package:solvo_flutter_assignment/domain/use_cases/get_attempts_count_use_case.dart';
 import 'package:solvo_flutter_assignment/domain/use_cases/get_current_round_use_case.dart';
 import 'package:solvo_flutter_assignment/domain/use_cases/is_game_end_use_case.dart';
 import 'package:solvo_flutter_assignment/domain/use_cases/set_max_value_use_case.dart';
@@ -26,6 +27,7 @@ class DependencyInjector {
         _injector.get<CheckAnswerUseCase>(),
         _injector.get<IsGameEndUseCase>(),
         _injector.get<GetCurrentRoundUseCase>(),
+        _injector.get<GetAttemptsCountUseCase>(),
       ),
     );
 
@@ -42,7 +44,7 @@ class DependencyInjector {
   }
 
   static void _configureRepositories() {
-    _injector.registerSingleton<AnswerRepository>(() => AnswerRepository());
+    _injector.registerSingleton<InMemorySettingsRepository>(() => InMemorySettingsRepository());
 
     _injector
         .registerSingleton<RoundRepository>(() => InMemoryRoundRepository());
@@ -50,30 +52,42 @@ class DependencyInjector {
 
   static void _configureUseCases() {
     _injector.registerSingleton<SaveSettingsUseCase>(() {
-      var answerRepository = _injector.get<AnswerRepository>();
-      return SaveSettingsUseCase(answerRepository);
+      final settingsRepository = _injector.get<InMemorySettingsRepository>();
+
+      return SaveSettingsUseCase(settingsRepository);
     });
 
     _injector.registerSingleton<UpdateNewCorrectAnswerUseCase>(() {
-      var answerRepository = _injector.get<AnswerRepository>();
-      var roundRepository = _injector.get<RoundRepository>();
-      return UpdateNewCorrectAnswerUseCase(answerRepository, roundRepository);
+      final settingsRepository = _injector.get<InMemorySettingsRepository>();
+      final roundRepository = _injector.get<RoundRepository>();
+
+      return UpdateNewCorrectAnswerUseCase(settingsRepository, roundRepository);
     });
 
     _injector.registerSingleton<CheckAnswerUseCase>(() {
-      var roundRepository = _injector.get<RoundRepository>();
+      final roundRepository = _injector.get<RoundRepository>();
+
       return CheckAnswerUseCase(roundRepository);
     });
 
     _injector.registerSingleton<IsGameEndUseCase>(() {
-      var answerRepository = _injector.get<AnswerRepository>();
-      var roundRepository = _injector.get<RoundRepository>();
-      return IsGameEndUseCase(answerRepository, roundRepository);
+      final settingsRepository = _injector.get<InMemorySettingsRepository>();
+      final roundRepository = _injector.get<RoundRepository>();
+
+      return IsGameEndUseCase(settingsRepository, roundRepository);
     });
 
     _injector.registerSingleton<GetCurrentRoundUseCase>(() {
-      var roundRepository = _injector.get<RoundRepository>();
+      final roundRepository = _injector.get<RoundRepository>();
+
       return GetCurrentRoundUseCase(roundRepository);
+    });
+
+    _injector.registerSingleton<GetAttemptsCountUseCase>(() {
+      final settingsRepository = _injector.get<InMemorySettingsRepository>();
+      final roundRepository = _injector.get<RoundRepository>();
+
+      return GetAttemptsCountUseCase(settingsRepository, roundRepository);
     });
   }
 }

@@ -1,16 +1,61 @@
-# solvo_flutter_assigment
 
-solvo assigment
+## Installation
 
-## Getting Started
+1. Clone the repository to your local machine:
 
-This project is a starting point for a Flutter application.
+git clone [https://github.com/ShortMikelon/solvo_flutter_assigment.git](https://github.com/ShortMikelon/solvo_flutter_assigment.git)
+cd solvo_flutter_assigment
 
-A few resources to get you started if this is your first Flutter project:
+2. Ensure all project dependencies are installed:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+```
+flutter pub get
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Running the Project
+
+1. Connect a device or start an emulator.
+
+2. Run the application:
+
+For Android:
+
+```
+flutter run
+```
+
+For iOS:
+
+```
+flutter run
+```
+
+3. If you want to run the application on a specific platform (e.g., Android or iOS), use the command:
+
+For Android:
+
+```
+flutter run --target-platform android
+```
+
+For iOS:
+
+```
+flutter run --target-platform ios
+```
+
+## Project Structure
+
+- `lib/` - Source code of your application
+- `android/` - Android-specific code
+- `ios/` - iOS-specific code
+- `assets/` - Resources such as images, fonts, and other files
+- `test/` - Unit tests for your application
+
+## Running Tests
+
+1. For automated testing, use the command:
+
+```
+flutter test
+```

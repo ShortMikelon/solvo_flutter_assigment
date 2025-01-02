@@ -15,8 +15,11 @@ final class SettingsInitial extends SettingsState {
 }
 
 final class LaunchGameState extends SettingsState {
-  const LaunchGameState();
+  final int maxValue;
+  final int numberAttempts;
+
+  const LaunchGameState(this.maxValue, this.numberAttempts);
 
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [maxValue, numberAttempts];
 }

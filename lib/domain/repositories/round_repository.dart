@@ -14,4 +14,8 @@ abstract class RoundRepository {
   Round createNewRound(int correctAnswer);
 }
 
-class InvalidCurrentCorrectAnswerException implements Exception {}
+class InvalidCorrectAnswerException implements Exception {}
+
+class RoundNotFoundException implements Exception {}
+
+class LoadLastRoundException implements Exception {}

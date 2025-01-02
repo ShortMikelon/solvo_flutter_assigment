@@ -12,11 +12,14 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(10.0),
-        child: const _PageBody(),
+    return BlocProvider(
+      create: (context) => Injector.appInstance.get<SettingsBloc>(),
+      child: Scaffold(
+        body: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(10.0),
+          child: const _PageBody(),
+        ),
       ),
     );
   }
@@ -27,12 +30,9 @@ class _PageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => Injector.appInstance.get<SettingsBloc>(),
-      child: BlocConsumer<SettingsBloc, SettingsState>(
-        builder: _builder,
-        listener: _listener,
-      ),
+    return BlocConsumer<SettingsBloc, SettingsState>(
+      builder: _builder,
+      listener: _listener,
     );
   }
 
@@ -40,9 +40,9 @@ class _PageBody extends StatelessWidget {
     int maxValue = SettingsBloc.initialMaxValue;
     int numberAttempts = SettingsBloc.initialNumberAttempts;
 
-    if (state is SettingsInitial) {
-      maxValue = state.maxValue;
-      numberAttempts = state.numberAttempts;
+    if (state is SettingsInitial || state is LaunchGameState) {
+      maxValue = (state as dynamic).maxValue;
+      numberAttempts = (state as dynamic).numberAttempts;
     }
 
     return Column(
@@ -86,7 +86,8 @@ class _PageBody extends StatelessWidget {
 
   void _listener(BuildContext context, SettingsState state) {
     if (state is LaunchGameState) {
-      Navigator.popAndPushNamed(context, GuessNumberPage.route, arguments: false);
+      Navigator.popAndPushNamed(context, GuessNumberPage.route,
+          arguments: false);
     }
   }
 

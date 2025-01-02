@@ -1,12 +1,12 @@
-import 'package:solvo_flutter_assignment/data/answers_repository.dart';
+import 'package:solvo_flutter_assignment/data/in_memory_settings_repository.dart';
 
 class SaveSettingsUseCase {
-  final AnswerRepository _answerRepository;
+  final InMemorySettingsRepository _settingsRepository;
 
-  const SaveSettingsUseCase(this._answerRepository);
+  const SaveSettingsUseCase(this._settingsRepository);
 
   void execute(int newMaxValue, int numberAttempts) {
-    _answerRepository.maxValue = newMaxValue;
-    _answerRepository.numberAttempts = numberAttempts;
+    _settingsRepository.maxValue = newMaxValue;
+    _settingsRepository.numberAttempts = numberAttempts;
   }
 }

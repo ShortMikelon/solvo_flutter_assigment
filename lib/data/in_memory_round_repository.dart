@@ -12,13 +12,21 @@ class InMemoryRoundRepository extends RoundRepository {
   List<Round> get allRounds => _allRounds;
 
   @override
-  Round get currentRound => _currentRound!;
+  Round get currentRound {
+    if (_currentRound != null) {
+      return _currentRound!;
+    } else {
+      throw RoundNotFoundException();
+    }
+  }
 
   @override
-  bool get isLastRoundOver => _allRounds.isNotEmpty && _allRounds.last.status == RoundStatus.notFinished;
+  bool get isLastRoundOver => _allRounds.isEmpty || _allRounds.last.status != RoundStatus.notFinished;
 
   @override
   Round createNewRound(int correctAnswer) {
+    if (correctAnswer < 0) throw InvalidCorrectAnswerException();
+    
     _lastId++;
 
     Round round = Round(
@@ -37,13 +45,14 @@ class InMemoryRoundRepository extends RoundRepository {
 
   @override
   void loadLastRound() {
+    if (_allRounds.isEmpty) throw LoadLastRoundException();
     _currentRound = _allRounds.last;
   }
 
   @override
   void updateRound(Round round) {
     int roundIndex = _allRounds.indexWhere((item) => item.id == round.id);
-    if (roundIndex == -1) return;
+    if (roundIndex == -1) throw RoundNotFoundException();
 
     _allRounds[roundIndex] = round;
 

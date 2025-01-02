@@ -13,3 +13,5 @@ class OnTextChangedEvent extends GuessNumberEvent {
 
   const OnTextChangedEvent(this.text) : super();
 }
+
+class OnLoadPageEvent extends GuessNumberEvent {}
